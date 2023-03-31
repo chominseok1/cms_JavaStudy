@@ -1,4 +1,6 @@
-
+/*
+ * 문제 14정리
+ */
 public class 문제14정리 {
 
 	public static void main(String[] args) {
