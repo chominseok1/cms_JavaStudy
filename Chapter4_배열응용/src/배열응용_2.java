@@ -45,9 +45,9 @@ public class 배열응용_2 {
 		System.out.println(Arrays.toString(arr));
 		//최대값
 		//최소값
-		int max=arr[0];
-		int min=arr[0];
-		for(int i:arr)
+		int max=arr[0]; //int max=arr[0]
+		int min=arr[0]; // int min=arr[0]
+		for(int i:arr) // for(int i:arr)
 		{
 			if(max<i)
 				max=i;
