@@ -16,7 +16,7 @@ public class 반복문_6 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//1~10 까지 출력
-		int i=1;
+		/*int i=1;
 		do
 		{
 			System.out.print(i+" ");
@@ -52,6 +52,15 @@ public class 반복문_6 {
 		do
 		{
 			System.out.println("i="+i);
+			i++;
+		}while(i<10);*/
+		Scanner scan=new Scanner(System.in);
+		System.out.print("단 입력");
+		int dan=scan.nextInt();
+		int i=1;
+		do
+		{
+			System.out.printf("%d * %d= %d\n",dan,i,(dan*i));
 			i++;
 		}while(i<10);
 	}
