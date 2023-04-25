@@ -190,6 +190,29 @@ public class 반복문_1 {
 			System.out.print(c++ +" ");
 			i++;
 		}while(i<26);
+		System.out.println("=========================");
+		c='A';
+		for(int j=0;j<26;j++)
+		{
+			System.out.print(c+++" ");
+		}
+		System.out.println("=================");
+		c='A';
+		i=1;
+		while(i<=26)
+		{
+			System.out.print(c++);
+			i++;
+		}
+		System.out.println("\n==================");
+		c='A';
+		i=1;
+		do
+		
+		{
+			System.out.print(c++);
+			i++;
+		}while(i<=26);
 	}
 
 }

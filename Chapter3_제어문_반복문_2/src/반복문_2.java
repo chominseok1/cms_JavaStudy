@@ -18,7 +18,38 @@ public class 반복문_2 {
 				odd+=i; //홀수합
 			i++;
 		}*/
-		for(int i=1; i<=100; i++)
+		/*for(int i=1; i<=100; i++)
+		{
+			sum+=i;
+			if(i%2==0)
+				even+=i;
+			else
+				odd+=i;
+		}
+		System.out.println("1~100까지의 총합:"+sum);
+		System.out.println("1~100까지의 짝수 총합:"+even);
+		System.out.println("1~100까지의 홀수 총합:"+odd);*/
+		
+		
+		int j=1;
+		while(j<=100)
+		{
+			sum+=j;
+			if(j%2==0)
+				even+=j;
+			else
+				odd+=j;
+			j++;
+		}
+		System.out.println("1~100까지의 총합:"+sum);
+		System.out.println("1~100까지의 짝수 총합:"+even);
+		System.out.println("1~100까지의 홀수 총합:"+odd);
+		
+		sum=0; 
+		odd=0;
+		even=0;
+		
+		for(int i=1;i<=100;i++)
 		{
 			sum+=i;
 			if(i%2==0)
@@ -30,5 +61,6 @@ public class 반복문_2 {
 		System.out.println("1~100까지의 짝수 총합:"+even);
 		System.out.println("1~100까지의 홀수 총합:"+odd);
 	}
+	
 
 }

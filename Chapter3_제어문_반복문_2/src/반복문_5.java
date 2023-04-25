@@ -23,7 +23,7 @@ public class 반복문_5 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Scanner scan=new Scanner(System.in);
+		/*Scanner scan=new Scanner(System.in);
 		int win=0,lose=0,same=0;
 		while(true) //for(;;)
 		{
@@ -72,7 +72,54 @@ public class 반복문_5 {
 		//while 종료
 		System.out.println("===============결과값=======");
 		int total=win+lose+same;
-		System.out.printf("%d전 %d승 %d패 %d무\n",total,win,lose,same);
+		System.out.printf("%d전 %d승 %d패 %d무\n",total,win,lose,same);*/
+		int win=0,lose=0,draw=0;
+		Scanner scan=new Scanner(System.in);
+		
+		while(true)
+		{
+			System.out.println("가위(0) 바위(1) 보(2): 입력");
+			int a=scan.nextInt();
+			int c=(int)(Math.random()*3);
+			
+			if(a==9)
+			{
+				System.out.println("종료");
+				break;
+			}
+			
+			if(c==0)
+				System.out.println("컴퓨터: 가위");
+			else if(c==1)
+				System.out.println("컴퓨터: 바위");
+			else if(c==2)
+				System.out.println("컴퓨터: 보");
+			
+			if(a==0)
+				System.out.println("사용자: 가위");
+			else if(a==1)
+				System.out.println("사용자: 바위");
+			else if(a==2)
+				System.out.println("사용자: 보");
+			
+			switch(c-a)
+			{
+			case -1: case 2:
+				win++;
+				System.out.println("사용자 승");
+				break;
+			case -2: case 1:
+				lose++;
+				System.out.println("컴퓨터 승");
+				break;
+			case 0:
+				draw++;
+				System.out.println("비겼다");
+			}
+			System.out.println("===============결과값=======");
+			int total=win+lose+draw;
+			System.out.printf("%d전 %d승 %d패 %d무\n",total,win,lose,draw);
+		}
 	}
 
 }
