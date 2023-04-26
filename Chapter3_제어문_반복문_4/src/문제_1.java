@@ -15,7 +15,21 @@ public class 문제_1 {
 			}
 		}
 		System.out.println(a7+" "+c7);
+		int a=0;
+	int c=0;
+	
+	for(int i=0;i<10;i++)
+	{
+		if(i%5==0)
+		{
+			a+=i;
+			c++;
+		}
 		
 	}
+	System.out.println(a+"   "+c);
+	}
+	
+	
 
 }

@@ -54,6 +54,39 @@ class Sawon implements Cloneable
 	}
 	
 }
+class Saram implements Cloneable
+{
+	private int no;
+	private String name;
+	
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public  Saram(int no,String name)
+	{
+		this.no=no;
+		this.name=name;
+	}
+	public void print()
+	{
+		System.out.println("번호:"+no+", 이름:"+name);
+	}
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	
+}
 public class 라이브러리_Object_1 {
 
 	public static void main(String[] args) throws CloneNotSupportedException  {
@@ -78,6 +111,32 @@ public class 라이브러리_Object_1 {
 		
 		s1.print();
 		s2.print();
+		
+		
+		Saram h=new Saram(20170982, "조민석");
+		h.print();
+		Saram h1=h;
+		h1.print();
+		h1.setNo(222);
+		h1.setName("홍길동");
+		
+		h.print();
+		h1.print();
+		
+		System.out.println(h+"    "+h1);
+		
+		Saram h2=(Saram)h.clone();
+		// Saram h2=(Saram)h.clone();         Saram h2=(Saram)h.clone();
+		
+		h2.setNo(33333);
+		h2.setName("장광만");
+		h2.print();
+		
+		h.print();
+		h1.print();
+		
+		h2.print();
+		
 		
 	}
 

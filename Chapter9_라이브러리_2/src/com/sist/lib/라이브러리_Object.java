@@ -20,7 +20,7 @@ package com.sist.lib;
  * -----------------------------------------------Spring관련 라이브러리
  * -----------------------------------------------데이터 수집(Jsoup , JSON)
  * 자동처리
- * 1) imort java.lang.*
+ * 1) import java.lang.*
  * 2) 메소드
  * 	void method()
  * 	{
@@ -85,6 +85,27 @@ class Student
 	}
 	
 }
+class M
+{
+	private int h;
+	private String n;
+	public M()
+	{
+		h=1;
+		n="조민석";
+		System.out.println("생성자: 멤버변수에 대한 초기화");
+	}
+	public void p()
+	{
+		System.out.println("ㅎ:"+h+"ㅇ:"+n);
+	}
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		System.out.println("객체 메모리 해제");
+	}
+	
+}
 public class 라이브러리_Object {
 
 	public static void main(String[] args) {
@@ -97,6 +118,10 @@ public class 라이브러리_Object {
 		s=null; //GC대상
 		// 메모리를 해제=> 강제로 명령
 		System.gc(); // finalize() : 소멸자   => 멀티미디어에서 많이 사용
+		M m=new M();
+		m.p();
+		m=null;
+		System.gc();
 	}
 
 }

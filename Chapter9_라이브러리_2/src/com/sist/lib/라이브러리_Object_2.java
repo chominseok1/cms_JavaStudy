@@ -31,6 +31,24 @@ class Member
 	}
 	
 }
+class Human
+{
+	private int no;
+	private String name;
+	
+	public Human(int n, String nm)
+	{
+		no=n;
+		name=nm;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "번호:"+no+", 이름:"+name;
+	}
+	
+}
 //객체를 문자열로 변환
 public class 라이브러리_Object_2 {
 
@@ -44,6 +62,15 @@ public class 라이브러리_Object_2 {
 		
 		System.out.println("묵시적 호출 m2:"+m2);
 		System.out.println("명시적 호출 m2:"+m2.toString());
+		
+		Human h1=new Human(22, "조민석");
+		Human h2=new Human(33, "김김김");
+		
+		System.out.println("묵시적 호출 h1:"+h1);
+		System.out.println("명시적 호출 h1:"+h1.toString());
+		
+		System.out.println("묵시적 호출 h2:"+h2);
+		System.out.println("명시적 호출 h2:"+h2.toString());
 	}
 
 }
