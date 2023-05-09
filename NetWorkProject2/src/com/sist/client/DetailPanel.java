@@ -27,7 +27,7 @@ public class DetailPanel extends JPanel implements ActionListener {
 		// 초기화, 시작과 동시에 구현
 		imgLa=new JLabel();
 		la1=new JLabel("제목");
-		la2=new JLabel("가수명");
+		la2=new JLabel("내용");
 		//la3=new JLabel("앨범명");
 		//la4=new JLabel("상태");
 		//la5=new JLabel("등폭");

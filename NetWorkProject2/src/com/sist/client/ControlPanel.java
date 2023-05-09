@@ -25,5 +25,6 @@ public class ControlPanel extends JPanel {
 		add("acomm",ap);
 		add("location",lp);
 		add("enter",ep);
+		add("detail",dp);
 	}
 }

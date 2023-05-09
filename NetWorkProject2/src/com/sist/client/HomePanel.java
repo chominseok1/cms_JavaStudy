@@ -86,7 +86,7 @@ public void mouseClicked(MouseEvent e) {
 			//JOptionPane.showMessageDialog(this, title);
 			TravelVO vo=ts.travelDetaliData(title);
 			try {
-				URL url=new URL("http:"+vo.getPoster());
+				URL url=new URL(vo.getPoster());
 				Image img=ImageChange.getImage(new ImageIcon(url), 530, 350);
 				cp.dp.imgLa.setIcon(new ImageIcon(img));
 				cp.dp.titleLa.setText(vo.getTitle());
