@@ -60,30 +60,32 @@ public class TravelSystem {
 		}
 
 	}
-	public List<TravelVO> TravelListData(int page)
+	public List<TravelVO> travelListData(int page)
 	{
-		List<TravelVO> tList=new ArrayList<TravelVO>();
-		int j=0; // 20개씩 나눠주는 변수
+		List<TravelVO> gList=
+				new ArrayList<TravelVO>();
+		int j=0; // 20개씩 나눠주는 변수 
 		int rowSize=20;
 		int start=(page-1)*rowSize;
 		/*
-		 *  1page => 0~19
-		 *  2page => 20~39
+		 *   1page => 0~19
+		 *   2page => 20~39
 		 */
 		for(int i=0;i<list.size();i++)
 		{
-			if(j<rowSize && i>=start) //20개씩 모으기 
+			if(j<rowSize && i>=start)
 			{
-				tList.add(list.get(i));
+				gList.add(list.get(i));
 				j++;
 			}
 		}
-		return tList;
+		return gList;
 	}
 	public int travelTotalPage()
 	{
-		return (int)(Math.ceil(list.size()/20.0)); // 20
+		return (int)(Math.ceil(list.size()/20.0));
 	}
+
 	public  List<TravelVO> TCastegoryData(int cno)
 
 	{
@@ -115,6 +117,19 @@ public class TravelSystem {
 			}
 		}
 		return tList;
+	}
+	public TravelVO travelDetaliData(String title)
+	{
+		TravelVO vo=new TravelVO();
+		for(TravelVO tvo:list)
+		{
+			if(tvo.getTitle().equals(title))
+			{
+				vo=tvo;
+				break;
+			}
+		}
+		return vo;
 	}
 
 	public static void main(String[] args) {

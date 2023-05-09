@@ -1,4 +1,4 @@
-package com.sist.temp;
+package com.sist.client;
 
 import java.awt.Color;
 
@@ -52,7 +52,8 @@ public class ChatPanel extends JPanel implements ChatInterface {
 				return false;
 			}
 			
-				};
+		
+		};
 		table=new JTable(model);
 		JScrollPane js2=new JScrollPane(table);
 		b1=new JButton("쪽지보내기");
@@ -63,17 +64,17 @@ public class ChatPanel extends JPanel implements ChatInterface {
 		
 		// 초기화가 끝나면 '배치'
 		setLayout(null);
-		js1.setBounds(10, 15, 560, 565);
-		tf.setBounds(10, 580, 440, 30);
-		box.setBounds(450, 580, 120, 30);
-		js2.setBounds(570, 15, 230, 250);
+		js1.setBounds(10, 15, 500, 565);
+		tf.setBounds(10, 585, 380, 30);
+		box.setBounds(395, 585, 115, 30);
+		js2.setBounds(520, 15, 230, 250);
 		p.setBounds(520, 270, 230, 35);
 		add(js1);
 		add(tf);add(box);
 		add(js2);
 		add(p);
-		b1.setEnabled(false); //비활성화
-		b2.setEnabled(false); // 비활성화
+		b1.setEnabled(false);
+		b2.setEnabled(false);
 		//String[] data= {"hong","홍길동","남자"};
 		//model.addRow(data);
 		// 이벤트 : (버튼을 클릭)

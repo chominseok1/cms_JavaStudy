@@ -1,4 +1,4 @@
-package com.sist.temp;
+package com.sist.client;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,41 +10,34 @@ import javax.swing.*;
 
 import com.sist.common.Function;
 import com.sist.common.ImageChange;
-import com.sist.mananger.GenieMusicVO;
-import com.sist.mananger.MusicSystem;
-import java.util.*; ///
-///////////// 네트워크 관련 ////////////////////////
-import java.util.List; ///
+import com.sist.manager.TravelVO;
+import com.sist.client.RecvMessage;
+import com.sist.client.SendMessage;
+import com.sist.manager.TravelSystem;
+import java.util.*;
+/////////////////////// 네트워크 관련 ////////
+import java.util.List;
 import java.io.*;
 import java.net.*;
-/*
- * 	프로그램 => 2개
- *  1) 로그인 , 채팅 문자열 입력... 일반 사용자
- *  2) 서버에서 전송되는 데이터를 출력
- *     ------------------------- 쓰레드
- */
 public class NetworkMain2 extends JFrame implements ActionListener,Runnable,MouseListener { //버튼 눌렀을때 처리 ActionListener
 	MenuPanel mp;
 	ControlPanel cp;
 	TopPanel tp;
-	JButton b1,b2,b3,b4,b5; // 버튼
+	JButton b1,b2,b3,b4,b5,b6,b7; // 버튼
 	JLabel logo;
 	Login login=new Login();
 	// 페이지 지정
-	int curpage=1; //
-	int totalpage=0; ///
-	MusicSystem ms=new MusicSystem();
-	/// 네트워크 관련 클래스 
-	/// 서버연결 => 연결기기
-	Socket s; // 서버의 메모리 연결
-	// 서버에서 보내준 값을 받는다
-	BufferedReader in; //
-	// 서버로 값을 전송
-	OutputStream out; //
-	// ID저장
+	int curpage=1;
+	int totalpage=0;
+	TravelSystem ts=new TravelSystem();
+	
+	Socket s;
+	BufferedReader in;
+	OutputStream out;
+	//ID저장
 	String myId;
-	//테이블 선택 인덱스번호
-	int selectRow=-1; // -1이 아이디가 선택이 안된상태
+	//테이블 선택 인덱스 번호
+	int selectRow=-1;
 	//쪽지 보내기
 	SendMessage sm=new SendMessage();
 	RecvMessage rm=new RecvMessage();
@@ -59,65 +52,72 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		tp=new TopPanel();
 		
 		setLayout(null); // 레이아웃을 쓰지않겠다 Layout없이 직접 배치
-		logo.setBounds(10, 15, 200, 130);
-		mp.setBounds(10, 150, 600, 50); // x y weight height 10에서 200까지(3) 
-		cp.setBounds(220, 15, 750, 780); // 15+50 65 밑으로(75지점) 1,3 2,4 밑에서 +10
-		tp.setBounds(980, 75, 200, 730); //10+960 지점
+		logo.setBounds(10,15,200,130);  // 사진
+		mp.setBounds(215, 15, 955, 130);// 목록	 // x축공백 y축공백 가로길이 세로길이 10에서 200까지(3) 
+		cp.setBounds(10, 150, 960,800); // 왼쪽창		// 15+50 65 밑으로(75지점) 1,3 2,4 밑에서 +10
+		tp.setBounds(980, 150, 200, 800); //오른쪽창		//10+960 지점
 		
 		b1=new JButton("홈");
-		b2=new JButton("뮤직검색");
-		b3=new JButton("채팅");
-		b4=new JButton("뉴스검색");
-		b5=new JButton("뮤직추천"); //mp에 추가해야 함 메뉴를
-		mp.setLayout(new GridLayout(1,5,10,10));
+		b2=new JButton("장소");
+		b3=new JButton("엔터");
+		b4=new JButton("숙박");
+		b5=new JButton("검색"); //mp에 추가해야 함 메뉴를
+		b6=new JButton("뉴스");
+		b7=new JButton("채팅");
+		mp.setLayout(new GridLayout(1,7,5,5));
 		mp.add(b1);
 		mp.add(b2);
 		mp.add(b3);
 		mp.add(b4);
 		mp.add(b5);
+		mp.add(b6);
+		mp.add(b7);
+	//	 
 		
 		//추가
 		add(mp);
 		add(cp);
 		add(tp);
 		add(logo);
+		
 		// 윈도우 크기
-		setSize(1200,800);
+		setSize(1200,955);
 		//setVisible(true);
 		//종료
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("네트워크 뮤직 프로그램");
+		setTitle("======서울여행====");
 		// 이벤트 등록
 		b1.addActionListener(this);
 		b2.addActionListener(this);
 		b3.addActionListener(this);
 		b4.addActionListener(this);
 		b5.addActionListener(this);
+		b6.addActionListener(this);
+		b7.addActionListener(this);
 		//로그인
 		login.b1.addActionListener(this); //버튼 눌렀을때 처리메소드가 어딨냐 자신이 갖고있는
 		login.b2.addActionListener(this);
 		//채팅
 		cp.cp.tf.addActionListener(this);
 		// HomePage
-		List<GenieMusicVO> list=ms.musicListData(curpage);
+    	List<TravelVO> list=ts.travelListData(curpage);
 		cp.hp.cardInit(list);
 		cp.hp.cardPrint(list);
-		totalpage=ms.musicTotalPage();
-		
-		cp.hp.b1.addActionListener(this); // 이전
-		cp.hp.b2.addActionListener(this); // 다음
-		cp.hp.pageLa.setText(curpage+" page/"+ totalpage+"pages");
-		
-		cp.cp.b1.addActionListener(this);
+		totalpage=ts.travelTotalPage();
+		// 여러번 => 동작을 여러번 수행 
+		cp.hp.b1.addActionListener(this);// 이전
+    	cp.hp.b2.addActionListener(this);// 다음
+    	cp.hp.pageLa.setText(curpage+" page /"
+                + totalpage+" pages");
+    	cp.cp.b1.addActionListener(this);
 		cp.cp.b2.addActionListener(this);
 		cp.cp.table.addMouseListener(this);
-		
-		musicDisplay();//
 		
 		sm.b1.addActionListener(this);
 		sm.b2.addActionListener(this);
 		rm.b1.addActionListener(this);
 		rm.b2.addActionListener(this);
+		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -137,90 +137,98 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		new NetworkMain2();
 		
 	} // 양쪽 사이드 고정 가운데만 바꾸기 가운데 화면디자인
-	
-	//버튼 처리
-	public void musicDisplay()
+	public void travelDisplay()
 	{
 		
-		List<GenieMusicVO> list=ms.musicListData(curpage);
+		List<TravelVO> list=ts.travelListData(curpage);
 		cp.hp.cardInit(list);
 		cp.hp.cardPrint(list);
-		totalpage=ms.musicTotalPage();
-		cp.hp.pageLa.setText(curpage+" page/"+ totalpage+"pages");
-		
+		totalpage=ts.travelTotalPage();
+		cp.hp.pageLa.setText(curpage+" page /"
+		                  + totalpage+" pages");
 	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==b1) //1번눌렀을때 나오는
-		{
+		{	
 			curpage=1;
-			musicDisplay();
+			travelDisplay();
 			cp.card.show(cp, "home"); //이름 부여 
 		}
 		else if(e.getSource()==b2)
 		{
-			cp.card.show(cp, "find"); //이름 부여
+			cp.card.show(cp, "location"); //이름 부여
 		}
 		else if(e.getSource()==b3)
 		{
-			cp.card.show(cp, "chat"); //이름 부여
+			cp.card.show(cp, "enter"); //이름 부여
 		}
 		else if(e.getSource()==b4)
 		{
-			cp.card.show(cp, "news"); //이름 부여
+			cp.card.show(cp, "acomm"); //이름 부여
 		}
 		else if(e.getSource()==b5)
 		{
-			cp.card.show(cp, "recomm"); //이름 부여
+			cp.card.show(cp, "find"); //이름 부여
+		}
+		else if(e.getSource()==b6)
+		{
+			cp.card.show(cp, "news"); //이름 부여
+		}
+		else if(e.getSource()==b7)
+		{
+			cp.card.show(cp, "chat"); //이름 부여
 		}
 		else if(e.getSource()==login.b1)
 		{
 			// 로그인 데이터 읽기
-			String id=login.tf1.getText();
-			if(id.length()<1)
-			{
-				JOptionPane.showMessageDialog(this, "ID를 입력하세요");
-				login.tf1.requestFocus();
-				return;
-			}
-			String name=login.tf2.getText();
-			if(name.length()<1)
-			{
-				JOptionPane.showMessageDialog(this, "이름을 입력하세요");
-				login.tf2.requestFocus();
-				return;
-			}
-			String sex="남자";
-			if(login.rb1.isSelected()) // 남자 라디오버튼이 선택
-			{
-				sex="남자";
-			}
-			else
-			{
-				sex="여자";
-			}
-			
-			// 서버로 전송
-			try
-			{
-				// 서버 연결
-				s=new Socket("",3456);
-							  //ip
-				// 서버 컴퓨터 => ip
-				// 211.238.142.()
-				// 읽는 위치 / 쓰는 위치
-				in=new BufferedReader(new InputStreamReader(s.getInputStream()));
-				// s는 서버 메모리 => 서버 메모리로부터 값을 읽어 온다
-				out=s.getOutputStream();
-				//서버에서 읽어 갈 수 있게 메모리에 저장
-				
-				//서버로 로그인 요청
-				out.write((Function.LOGIN+"|"+id+"|"+name+"|"+sex+"\n").getBytes()); 
-			}catch(Exception ex) {}
-			//서버로부터 전송된 값을 받아온다
-			new Thread(this).start(); // run() 호출
+						String id=login.tf1.getText();
+						if(id.length()<1)
+						{
+							JOptionPane.showMessageDialog(this, 
+									"ID를 입력하세요");
+							login.tf1.requestFocus();
+							return;
+						}
+						String name=login.tf2.getText();
+						if(name.length()<1)
+						{
+							JOptionPane.showMessageDialog(this, 
+									"이름을 입력하세요");
+							login.tf2.requestFocus();
+							return;
+						}
+						String sex="남자";
+						if(login.rb1.isSelected())// 남자 라디오버튼이 선택 
+						{
+							sex="남자";
+						}
+						else
+						{
+							sex="여자";
+						}
+						
+						// 서버로 전송 
+						try
+						{
+							// 서버 연결 
+							s=new Socket("211.238.142.118",3456);
+							// 서버 컴퓨터 => IP 
+							// 211.238.142.()
+							// 읽는 위치 / 쓰는 위치
+							in=new BufferedReader(
+									new InputStreamReader(s.getInputStream()));
+							// s는 서버 메모리 => 서버메모리로부터 값을 읽어 온다 
+							out=s.getOutputStream(); 
+							// 서버에서 읽어 갈 수 있게 메모리에 저장 
+							
+							// 서버로 로그인 요청 
+							out.write((Function.LOGIN+"|"
+									+id+"|"+name+"|"+sex+"\n").getBytes());
+						}catch(Exception ex) {}
+						// 서버로부터 전송된 값을 받아 온다 
+						new Thread(this).start();// run()호출 
 		}
 		else if(e.getSource()==login.b2)
 		{
@@ -228,26 +236,25 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		}
 		else if(e.getSource()==cp.cp.tf)
 		{
-			//cp.cp.initstyle();
 			String msg=cp.cp.tf.getText();
 			String color=cp.cp.box.getSelectedItem().toString();
 			if(msg.length()<1) return;
 			
-			// 서버로 전송
+			// 서버로 전송 
 			try
 			{
-				out.write((Function.CHAT+"|"+msg+"|"+color+"\n").getBytes());
-			}catch(Exception ex) {}
+				out.write((Function.CHAT+"|"
+						+msg+"|"+color+"\n").getBytes());
+			}catch(Exception ex){}
 			
-			cp.cp.tf.setText(""); // 문자쓰고 공백 주기
-			
+			cp.cp.tf.setText(""); //문자쓰고 공백주기
 		}
 		else if(e.getSource()==cp.hp.b1)
 		{
 			if(curpage>1)
 			{
 				curpage--;
-				musicDisplay();
+				travelDisplay();
 			}
 		}
 		else if(e.getSource()==cp.hp.b2)
@@ -255,7 +262,7 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 			if(curpage<totalpage)
 			{
 				curpage++;
-				musicDisplay();
+				travelDisplay();
 			}
 		}
 		else if(e.getSource()==cp.cp.b2)
@@ -324,6 +331,9 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 	// 서버에서 결과값을 받아서 출력 => 쓰레드 (자동화) 
 	// member.jsp?id=aaa&pwd=1234&name=홍길동
 	// 	 100 
+		
+	
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -331,56 +341,61 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		{
 			while(true)
 			{
-				String msg=in.readLine(); // 서버에서 보낸값
-				StringTokenizer st=new StringTokenizer(msg,"|");
-				
+				String msg=in.readLine();
+				// 서버에서 보낸값 
+				StringTokenizer st=
+						new StringTokenizer(msg,"|");
 				int protocol=Integer.parseInt(st.nextToken());
 				// 100|id|name|sex
 				switch(protocol)
 				{
-				 // 서버에서 로그인이 들어온 경우
-				 // LOGIN => 테이블에 정보를 출력한다
-				case Function.LOGIN:
-				 {
-					String[] data= {st.nextToken(),st.nextToken(),st.nextToken()}; // 순서대로 ID name sex
-					cp.cp.model.addRow(data);
-				 }
-				 // C/S => 모든 명령이 서버로부터 받아서 처리 
-				 //MYLOG => 로그인 종료하고 메인창을 보여준다
-				 break;
-				 case Function.MYLOG:
-				 {
-					setTitle(st.nextToken());
-					myId=st.nextToken();
-					login.setVisible(false);
-					setVisible(true);
-				 }
-				 break;
-				 case Function.CHAT:
-				 {
-					cp.cp.initstyle();
-					cp.cp.append(st.nextToken(), st.nextToken());
-					// 			 채팅문자열		  색상
-				 }
-				 break;
-				 case Function.INFO:
-				 {
-					 String data="아이디:"+st.nextToken()+"\n"+"이름"+st.nextToken()+"\n"+"성별"+st.nextToken();
-					 JOptionPane.showMessageDialog(this, data);
-				 }
-				 break;
-				 case Function.MSGSEND:
-				 {
-					 String id=st.nextToken();
-					 String strMsg=st.nextToken();
-					 rm.tf.setText(id);
-					 rm.ta.setText(strMsg);
-					 rm.setVisible(true);
-				 }
-				 break;
+				  // 서버에서 로그인이 들어온 경우
+				  // LOGIN=> 테이블에 정보를 출력한다 
+				  case Function.LOGIN:
+				  {
+					  String[] data= {
+							  st.nextToken(),//ID
+							  st.nextToken(),//name
+							  st.nextToken()//sex
+					  };
+					  cp.cp.model.addRow(data);
+				  }
+				  // C/S => 모든 명령이 서버로부터 받아서 처리 
+				  // MYLOG => 로그인 종료하고 메인창을 보여준다 
+				  break;
+				  case Function.MYLOG:
+				  {
+					  setTitle(st.nextToken());
+					  myId=st.nextToken();
+					  login.setVisible(false);
+					  setVisible(true);
+				  }
+				  break;
+				  case Function.CHAT:
+				  {
+					  cp.cp.initstyle();
+					  cp.cp.append(st.nextToken(),st.nextToken());
+					  //           채팅문자열          색상 
+				  } 
+				  break;
+				  case Function.INFO:
+					 {
+						 String data="아이디:"+st.nextToken()+"\n"+"이름"+st.nextToken()+"\n"+"성별"+st.nextToken();
+						 JOptionPane.showMessageDialog(this, data);
+					 }
+					 break;
+				  case Function.MSGSEND:
+					 {
+						 String id=st.nextToken();
+						 String strMsg=st.nextToken();
+						 rm.tf.setText(id);
+						 rm.ta.setText(strMsg);
+						 rm.setVisible(true);
+					 }
+					 break;
 				}
 			}
-		}catch(Exception ex) {}
+		}catch(Exception ex){}
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {

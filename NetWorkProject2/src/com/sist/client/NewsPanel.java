@@ -1,11 +1,12 @@
-package com.sist.temp;
+package com.sist.client;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-import com.sist.mananger.NaverNewsManager;
-import com.sist.mananger.NewsVO;
+import com.sist.manager.NaverNewsManager;
+import com.sist.manager.NewsVO;
+import com.sist.client.NewsCard;
 
 import java.awt.event.*;
 import java.util.List;
@@ -16,31 +17,32 @@ public class NewsPanel extends JPanel implements ActionListener {
 	JTextField tf;
 	JButton b;
 	JPanel pan;
+	
 	public NewsPanel()
 	{
 		// 초기화
-		tf=new JTextField();
-		b=new JButton("검색");
-		for(int i=0;i<cards.length;i++)
-		{
-			cards[i]=new NewsCard();
-		}
-		pan=new JPanel();
-		pan.setLayout(new GridLayout(5, 1, 5 ,5)); //한줄에 뉴스카드 하다
-		setLayout(null);
-		//배치
-		tf.setBounds(10, 15, 250, 30);
-		b.setBounds(265, 15, 100, 30);
-		pan.setBounds(10, 55, 720, 650);
-		add(tf);
-		add(b);
-		add(pan);
-		
-		//등록
-		tf.addActionListener(this);
-		b.addActionListener(this);
-		
-		newsPrint("뮤직");
+				tf=new JTextField();
+				b=new JButton("검색");
+				for(int i=0;i<cards.length;i++)
+				{
+					cards[i]=new NewsCard();
+				}
+				pan=new JPanel();
+				pan.setLayout(new GridLayout(5, 1, 5 ,5)); //한줄에 뉴스카드 하다
+				setLayout(null);
+				//배치
+				tf.setBounds(10, 15, 250, 30);
+				b.setBounds(265, 15, 100, 30);
+				pan.setBounds(10, 55, 800, 650);
+				add(tf);
+				add(b);
+				add(pan);
+				
+				//등록
+				tf.addActionListener(this);
+				b.addActionListener(this);
+				
+				newsPrint("여행");
 	}
 	public void newsPrint(String fd)
 	{
@@ -53,8 +55,9 @@ public class NewsPanel extends JPanel implements ActionListener {
 			cards[i].dateLa.setText(vo.getDate());
 			pan.add(cards[i]);
 			i++;
-		}
+		}	
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -71,5 +74,6 @@ public class NewsPanel extends JPanel implements ActionListener {
 			newsPrint(fd);
 			
 		}
+		
 	}
 }

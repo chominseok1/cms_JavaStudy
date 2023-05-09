@@ -9,16 +9,17 @@ import java.util.*;
 import java.util.List;
 
 import com.sist.common.ImageChange;
+import com.sist.inter.FindInterface;
 import com.sist.manager.*;
 import com.sist.manager.TravelSystem;
 import java.awt.event.*;
-public class FindPanel extends JPanel implements ActionListener {
+public class FindPanel extends JPanel implements ActionListener,FindInterface {
 	JTextField tf;
 	JButton b1;
 	JButton b2,b3,b4,b5,b6,b7,b8;
 	JTable table;
 	DefaultTableModel model;
-	TravelSystem ms=new TravelSystem();
+	TravelSystem ts=new TravelSystem();
 	public FindPanel()
 	{
 		//초기화
@@ -74,14 +75,14 @@ public class FindPanel extends JPanel implements ActionListener {
 		p.add(b8);
 		p.setBounds(10, 55, 700, 35);
 		
-		js.setBounds(10,100,700,600);
+		js.setBounds(10,100,700,650);
 		add(tf);
 		add(b1);
 		add(p);
 		add(js);
 		try
 		{
-		List<TravelVO> list=ms.TCastegoryData(1);
+		List<TravelVO> list=ts.TCastegoryData(1);
 		for(TravelVO vo:list)
 		 {
 			URL url=new URL(vo.getPoster());
@@ -158,13 +159,11 @@ public class FindPanel extends JPanel implements ActionListener {
 		
 		try
 		{
-		List<TravelVO> list=ms.TCastegoryData(cno);
+		List<TravelVO> list=ts.TCastegoryData(cno);
 		for(TravelVO vo:list)
 		 {
-			URL url=new URL("http:"+vo.getPoster());
-			URL url2=new URL(vo.getPoster());
-			
-			Image img=ImageChange.getImage(new ImageIcon(url2), 30, 30);
+			URL url=new URL(vo.getPoster());
+			Image img=ImageChange.getImage(new ImageIcon(url), 30, 30);
 			Object[] data= {
 			new ImageIcon(img),
 			vo.getTitle(),
@@ -172,9 +171,7 @@ public class FindPanel extends JPanel implements ActionListener {
 		     };
 			model.addRow(data);
 		 }
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
+		}catch(Exception ex) {}
 	}
 	public void findPrint2(String title)
 	{
@@ -185,7 +182,7 @@ public class FindPanel extends JPanel implements ActionListener {
 		
 		try
 		{
-		List<TravelVO> list=ms.TFindData(title);
+		List<TravelVO> list=ts.TFindData(title);
 		for(TravelVO vo:list)
 		 {
 			URL url=new URL(vo.getPoster());

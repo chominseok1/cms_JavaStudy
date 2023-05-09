@@ -28,6 +28,31 @@ public class MusicSystem {
 			}catch(Exception e) {}
 		}
 	}
+	// 뮤직데이터 20개씩 나눠서 전송  사용자 페이지에 의해
+	public List<GenieMusicVO> musicListData(int page)
+	{
+		List<GenieMusicVO> gList=new ArrayList<GenieMusicVO>();
+		int j=0; // 20개씩 나눠주는 변수
+		int rowSize=20;
+		int start=(page-1)*rowSize;
+		/*
+		 *  1page => 0~19
+		 *  2page => 20~39
+		 */
+		for(int i=0;i<list.size();i++)
+		{
+			if(j<rowSize && i>=start) //20개씩 모으기 
+			{
+				gList.add(list.get(i));
+				j++;
+			}
+		}
+		return gList;
+	}
+	public int musicTotalPage()
+	{
+		return (int)(Math.ceil(list.size()/20.0)); // 20
+	}
 	public List<GenieMusicVO> musicCastegoryData(int cno)
 	{
 		List<GenieMusicVO> mList=new ArrayList<GenieMusicVO>();
@@ -51,6 +76,19 @@ public class MusicSystem {
 			}
 		}
 		return mList;
+	}
+	public GenieMusicVO musicDetaliData(String title)
+	{
+		GenieMusicVO vo=new GenieMusicVO();
+		for(GenieMusicVO gvo:list)
+		{
+			if(gvo.getTitle().equals(title))
+			{
+				vo=gvo;
+				break;
+			}
+		}
+		return vo;
 	}
 	public static void main(String[] args) {
 		MusicSystem ms=new MusicSystem();

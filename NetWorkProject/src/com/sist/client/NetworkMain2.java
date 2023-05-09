@@ -7,13 +7,22 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import com.sist.common.ImageChange;
+import com.sist.manager.TravelVO;
+import com.sist.manager.TravelVO;
+import com.sist.manager.TravelSystem;
+import java.util.*;
+import java.util.List;
 public class NetworkMain2 extends JFrame implements ActionListener { //버튼 눌렀을때 처리 ActionListener
 	MenuPanel mp;
 	ControlPanel cp;
 	TopPanel tp;
 	JButton b1,b2,b3,b4,b5,b6,b7; // 버튼
 	JLabel logo;
-	//Login login=new Login();
+	Login login=new Login();
+	//페이지 지정
+	int curpage=1; //
+	int totalpage=0; ///
+	TravelSystem ts=new TravelSystem();
 	public NetworkMain2()
 	{
 		logo=new JLabel();
@@ -68,10 +77,22 @@ public class NetworkMain2 extends JFrame implements ActionListener { //버튼 �
 		b6.addActionListener(this);
 		b7.addActionListener(this);
 		
-		//login.b1.addActionListener(this); //버튼 눌렀을때 처리메소드가 어딨냐 자신이 갖고있는
-		//login.b2.addActionListener(this);
+		login.b1.addActionListener(this); //버튼 눌렀을때 처리메소드가 어딨냐 자신이 갖고있는
+		login.b2.addActionListener(this);
 		//채팅
 		cp.cp.tf.addActionListener(this);
+		// HOme page
+		List<TravelVO> list=ts.TravelListData(curpage);
+		cp.hp.cardInit(list);
+		cp.hp.cardPrint(list);
+		totalpage=ts.travelTotalPage();
+		
+		
+		cp.hp.b1.addActionListener(this); // 이전
+		cp.hp.b2.addActionListener(this); // 다음
+		cp.hp.pageLa.setText(curpage+" page/"+ totalpage+"pages");
+		
+		TravelDisplay();
 		
 	}
 	public static void main(String[] args) {
@@ -92,11 +113,26 @@ public class NetworkMain2 extends JFrame implements ActionListener { //버튼 �
 		new NetworkMain2();
 		
 	} // 양쪽 사이드 고정 가운데만 바꾸기 가운데 화면디자인
+	
+	//버튼 처리
+		public void TravelDisplay()
+		{
+			
+			List<TravelVO> list=ts.TravelListData(curpage);
+			cp.hp.cardInit(list);
+			cp.hp.cardPrint(list);
+			totalpage=ts.travelTotalPage();
+			cp.hp.pageLa.setText(curpage+" page/"+ totalpage+"pages");
+			cp.hp.b1.addActionListener(this); // 이전
+			cp.hp.b2.addActionListener(this); // 다음
+		}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==b1) //1번눌렀을때 나오는
 		{
+			curpage=1;
+			TravelDisplay();
 			cp.card.show(cp, "home"); //이름 부여 
 		}
 		else if(e.getSource()==b2)
@@ -123,7 +159,7 @@ public class NetworkMain2 extends JFrame implements ActionListener { //버튼 �
 		{
 			cp.card.show(cp, "chat"); //이름 부여
 		}
-		/*else if(e.getSource()==login.b1)
+		else if(e.getSource()==login.b1)
 		{
 			login.setVisible(false); //로그인 창 사라짐
 			setVisible(true); // 메인창 띄우겠다
@@ -131,7 +167,7 @@ public class NetworkMain2 extends JFrame implements ActionListener { //버튼 �
 		else if(e.getSource()==login.b2)
 		{
 			System.exit(0); //프로그램 종료
-		}*/
+		}
 		else if(e.getSource()==cp.cp.tf)
 		{
 			cp.cp.initstyle();
@@ -142,6 +178,22 @@ public class NetworkMain2 extends JFrame implements ActionListener { //버튼 �
 			cp.cp.append(msg, color);
 			
 			cp.cp.tf.setText(""); // 문자쓰고 공백 주기
+		}
+		else if(e.getSource()==cp.hp.b1)
+		{
+			if(curpage>1)
+			{
+				curpage--;
+				TravelDisplay();
+			}
+		}
+		else if(e.getSource()==cp.hp.b2)
+		{
+			if(curpage<totalpage)
+			{
+				curpage++;
+				TravelDisplay();
+			}
 		}
 		
 	}
