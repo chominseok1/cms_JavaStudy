@@ -63,6 +63,8 @@ import java.util.*;
 
 import com.sist.common.Function;
 
+import com.sist.server.Server.Client;
+
 import java.net.*;
 import java.io.*;
 public class Server implements Runnable{
@@ -221,6 +223,66 @@ public class Server implements Runnable{
 				    			+strMsg+"|"+color);
 				    }
 				    break;
+				    case Function.INFO:
+					{
+						// 상대방의 ID를 받는다
+						String youId=st.nextToken();
+						for(Client user:waitVc)
+						{
+							// 정보볼 대상을 찾는다 
+							/*
+							 * 	서버의 역할
+							 * 	1) 저장 (클라이언트 정보)
+							 * 		=>waitVc(Vector)
+							 *  2) 검색 : ID,Name
+							 *  3) 수정 : Id,pwd...
+							 *  4) 클라이언트로 전송 기능
+							 *  5) 요청에 처리 기능
+							 */
+							if(youId.equals(user.id))
+							{
+								messageTo(Function.INFO+"|"+user.id+"|"+user.name+"|"+user.sex);
+								break;
+							}
+						}
+					}
+					break;
+					case Function.MSGSEND:
+					{
+						String youId=st.nextToken();
+						String strMsg=st.nextToken();
+						for(Client user:waitVc)
+						{
+							if(youId.equals(user.id))
+							{
+								user.messageTo(Function.MSGSEND+"|"+id+"|"+strMsg);
+								break;
+							}
+						}
+					}
+					break;
+				    case Function.EXIT:
+					{
+						String mid=st.nextToken();
+						int i=0;
+						for(Client user:waitVc)
+						{
+						if(user.id.equals(mid))
+						{
+							user.messageTo(Function.MYEXIT+"|");
+							waitVc.remove(i);
+							in.close();
+							out.close();
+							//서버 종료
+							break;
+							
+						}
+						i++;
+						}
+						// 전체 메세지
+						messageAll(Function.EXIT+"|"+mid);
+					}
+					break;
 				    
 				}
 			}catch(Exception ex){}

@@ -23,7 +23,7 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 	MenuPanel mp;
 	ControlPanel cp;
 	TopPanel tp;
-	JButton b1,b2,b3,b4,b5,b6,b7; // 버튼
+	JButton b1,b4,b5,b6,b7,b8; // 버튼
 	JLabel logo;
 	Login login=new Login();
 	// 페이지 지정
@@ -44,7 +44,7 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 	public NetworkMain2()
 	{
 		logo=new JLabel();
-		Image img=ImageChange.getImage(new ImageIcon("c:\\javaDev\\logo.png"), 200,130);
+		Image img=ImageChange.getImage(new ImageIcon("c:\\javaDev\\logo1.png"), 200,130);
 		
 		logo.setIcon(new ImageIcon(img));
 		mp=new MenuPanel(); //메모리 할당
@@ -58,20 +58,22 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		tp.setBounds(980, 150, 200, 800); //오른쪽창		//10+960 지점
 		
 		b1=new JButton("홈");
-		b2=new JButton("장소");
-		b3=new JButton("엔터");
-		b4=new JButton("숙박");
+		//b2=new JButton("장소");//
+		//b3=new JButton("엔터");//
+		b4=new JButton("커뮤니티");
 		b5=new JButton("검색"); //mp에 추가해야 함 메뉴를
 		b6=new JButton("뉴스");
 		b7=new JButton("채팅");
-		mp.setLayout(new GridLayout(1,7,5,5));
+		b8=new JButton("나가기");
+		mp.setLayout(new GridLayout(1,6,5,5));
 		mp.add(b1);
-		mp.add(b2);
-		mp.add(b3);
+		//mp.add(b2);
+		//mp.add(b3);
 		mp.add(b4);
 		mp.add(b5);
 		mp.add(b6);
 		mp.add(b7);
+		mp.add(b8);
 	//	 
 		
 		//추가
@@ -84,16 +86,18 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		setSize(1200,955);
 		//setVisible(true);
 		//종료
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("======서울여행====");
 		// 이벤트 등록
 		b1.addActionListener(this);
-		b2.addActionListener(this);
-		b3.addActionListener(this);
+		//b2.addActionListener(this);
+		//b3.addActionListener(this);
 		b4.addActionListener(this);
 		b5.addActionListener(this);
 		b6.addActionListener(this);
 		b7.addActionListener(this);
+		b8.addActionListener(this);
 		//로그인
 		login.b1.addActionListener(this); //버튼 눌렀을때 처리메소드가 어딨냐 자신이 갖고있는
 		login.b2.addActionListener(this);
@@ -156,17 +160,17 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 			travelDisplay();
 			cp.card.show(cp, "home"); //이름 부여 
 		}
-		else if(e.getSource()==b2)
+		/*else if(e.getSource()==b2)
 		{
 			cp.card.show(cp, "location"); //이름 부여
 		}
 		else if(e.getSource()==b3)
 		{
 			cp.card.show(cp, "enter"); //이름 부여
-		}
+		}*/
 		else if(e.getSource()==b4)
 		{
-			cp.card.show(cp, "acomm"); //이름 부여
+			cp.card.show(cp, "board"); //이름 부여
 		}
 		else if(e.getSource()==b5)
 		{
@@ -327,6 +331,13 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 			rm.setVisible(false);
 			
 		}
+		else if(e.getSource()==b8)
+		{
+			try
+			{
+				out.write((Function.EXIT+"|"+myId+"\n").getBytes());
+			}catch(Exception ex) {}
+		}
 	}
 	// 서버에서 결과값을 받아서 출력 => 쓰레드 (자동화) 
 	// member.jsp?id=aaa&pwd=1234&name=홍길동
@@ -391,6 +402,27 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 						 rm.tf.setText(id);
 						 rm.ta.setText(strMsg);
 						 rm.setVisible(true);
+					 }
+					 break;
+				  
+					 case Function.MYEXIT:
+					 {
+						 dispose();
+						 System.exit(0);
+					 }
+					 break;
+					 case Function.EXIT:
+					 {
+						 String mid=st.nextToken();
+						 for(int i=0;i<cp.cp.model.getRowCount();i++)
+						 {
+							 String uid=cp.cp.table.getValueAt(i, 0).toString();
+							 if(mid.equals(uid))
+							 {
+								 cp.cp.model.removeRow(i);
+								 break;
+							 }
+						 }
 					 }
 					 break;
 				}
