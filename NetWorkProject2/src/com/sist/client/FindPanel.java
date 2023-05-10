@@ -55,7 +55,7 @@ public class FindPanel extends JPanel implements ActionListener,FindInterface {
 		};
 		table=new JTable(model);
 		// 출력위치 길이 설정
-		table.setRowHeight(35); //출력위치 길이 설정
+		table.setRowHeight(100); //출력위치 길이 설정
 		table.getTableHeader().setReorderingAllowed(false); // 이동 안되게 타이틀바 고정
 		JScrollPane js=new JScrollPane(table);
 		
@@ -86,7 +86,7 @@ public class FindPanel extends JPanel implements ActionListener,FindInterface {
 		for(TravelVO vo:list)
 		 {
 			URL url=new URL(vo.getPoster());
-			Image img=ImageChange.getImage(new ImageIcon(url), 30, 30);
+			Image img=ImageChange.getImage(new ImageIcon(url), 150, 150);
 			Object[] data= {
 			new ImageIcon(img),
 			vo.getTitle(),
@@ -163,7 +163,7 @@ public class FindPanel extends JPanel implements ActionListener,FindInterface {
 		for(TravelVO vo:list)
 		 {
 			URL url=new URL(vo.getPoster());
-			Image img=ImageChange.getImage(new ImageIcon(url), 30, 30);
+			Image img=ImageChange.getImage(new ImageIcon(url), 150, 150);
 			Object[] data= {
 			new ImageIcon(img),
 			vo.getTitle(),
@@ -186,7 +186,7 @@ public class FindPanel extends JPanel implements ActionListener,FindInterface {
 		for(TravelVO vo:list)
 		 {
 			URL url=new URL(vo.getPoster());
-			Image img=ImageChange.getImage(new ImageIcon(url), 30, 30);
+			Image img=ImageChange.getImage(new ImageIcon(url), 150, 150);
 			Object[] data= {
 			new ImageIcon(img),
 			vo.getTitle(),

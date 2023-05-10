@@ -13,6 +13,7 @@ public class BoardDetailPanel extends JPanel implements ActionListener {
 	JLabel noLa,nameLa,dateLa,hitLa,subLa;
 	JTextPane pane;
 	JButton b1,b2,b3;
+	BoardManager bm=new BoardManager();
 	public BoardDetailPanel(ControlPanel cp)
 	{
 		this.cp=cp;
@@ -79,6 +80,8 @@ setLayout(null);
 		p.setBounds(10, 350, 675, 35);
 		add(p);
 		b3.addActionListener(this);
+		b2.addActionListener(this);
+  	     b1.addActionListener(this);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -87,6 +90,23 @@ setLayout(null);
 		{
 			cp.card.show(cp, "board");
 			cp.bp.boardPrint();
+		}
+		else if(e.getSource()==b1)
+		{
+			int no=Integer.parseInt(noLa.getText());
+			BoardVO vo=bm.boardUpdateData(no);
+			cp.bup.tf1.setText(vo.getName());
+			cp.bup.tf2.setText(vo.getSubject());
+			cp.bup.ta.setText(vo.getContent());
+			cp.bup.la5.setText(String.valueOf(no));
+			cp.bup.pf.setText("");
+			cp.card.show(cp, "bup");
+		}
+		else if(e.getSource()==b2)
+		{
+			cp.bdelp.la1.setText(noLa.getText());
+			cp.bdelp.pf.setText("");
+			cp.card.show(cp, "delete");
 		}
 	}
 }

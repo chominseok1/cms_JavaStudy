@@ -18,6 +18,8 @@ public class ControlPanel extends JPanel {
 	DetailPanel dp; 
 	BoardInsertPanel ip;
 	BoardDetailPanel bdp;
+	BoardUpdatePanel bup;
+	BoardDeletePanel bdelp;
 	CardLayout card=new CardLayout(); //합쳐놓고 감추는 감춰놨다가 누르면 나오는
 	public ControlPanel()
 	{
@@ -26,6 +28,8 @@ public class ControlPanel extends JPanel {
 		bp=new BoardListPanel(this);
 		ip=new BoardInsertPanel(this);
 		bdp=new BoardDetailPanel(this);
+		bup=new BoardUpdatePanel(this);
+    	bdelp=new BoardDeletePanel(this);
 		setLayout(card);
 		add("home",hp);
 		add("news",np);
@@ -37,5 +41,7 @@ public class ControlPanel extends JPanel {
 		add("detail",dp);
 		add("insert",ip);
 		add("bdp",bdp);
+		add("bup",bup);
+    	add("delete",bdelp);
 	}
 }

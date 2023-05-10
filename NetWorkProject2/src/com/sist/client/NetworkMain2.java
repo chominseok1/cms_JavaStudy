@@ -24,7 +24,7 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 	ControlPanel cp;
 	TopPanel tp;
 	JButton b1,b4,b5,b6,b7,b8; // 버튼
-	JLabel logo;
+	JLabel logo,logo1;
 	Login login=new Login();
 	// 페이지 지정
 	int curpage=1;
@@ -43,10 +43,15 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 	RecvMessage rm=new RecvMessage();
 	public NetworkMain2()
 	{
+		logo1=new JLabel();
+		Image imgg=ImageChange.getImage(new ImageIcon("c:\\javaDev\\sea.Jpg"), 1200,955);
+		logo1.setIcon(new ImageIcon(imgg));
+		logo1.setBounds(0,0,1200,955);
+		
 		logo=new JLabel();
 		Image img=ImageChange.getImage(new ImageIcon("c:\\javaDev\\logo1.png"), 200,130);
-		
 		logo.setIcon(new ImageIcon(img));
+		
 		mp=new MenuPanel(); //메모리 할당
 		cp=new ControlPanel();
 		tp=new TopPanel();
@@ -57,8 +62,15 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		cp.setBounds(10, 150, 960,800); // 왼쪽창		// 15+50 65 밑으로(75지점) 1,3 2,4 밑에서 +10
 		tp.setBounds(980, 150, 200, 800); //오른쪽창		//10+960 지점
 		
+		//add(mp);
+		//add(cp);
+		
+		//add(logo);
+		//add(logo1);
+		//add(tp);
+		
 		b1=new JButton("홈");
-		//b2=new JButton("장소");//
+		//b2=new JButton("장소");// 
 		//b3=new JButton("엔터");//
 		b4=new JButton("커뮤니티");
 		b5=new JButton("검색"); //mp에 추가해야 함 메뉴를
@@ -74,20 +86,30 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		mp.add(b6);
 		mp.add(b7);
 		mp.add(b8);
+		
+		b1.setBackground(new Color(252, 128, 104));
+		b4.setBackground(new Color(252, 128, 104));
+		b5.setBackground(new Color(252, 128, 104));
+		b6.setBackground(new Color(252, 128, 104));
+		b7.setBackground(new Color(252, 128, 104));
+		b8.setBackground(new Color(252, 128, 104));
+		
 	//	 
 		
 		//추가
 		add(mp);
 		add(cp);
-		add(tp);
+	
 		add(logo);
+		add(logo1);
+		add(tp);
 		
 		// 윈도우 크기
 		setSize(1200,955);
 		//setVisible(true);
 		//종료
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("======서울여행====");
 		// 이벤트 등록
 		b1.addActionListener(this);
@@ -130,12 +152,12 @@ public class NetworkMain2 extends JFrame implements ActionListener,Runnable,Mous
 		{
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel"); //맥모양
-			UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+			//UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
 			///////////UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");////////////////////
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
 			//UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
-			//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+			UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 			
 		}catch(Exception ex) {}
 		new NetworkMain2();
