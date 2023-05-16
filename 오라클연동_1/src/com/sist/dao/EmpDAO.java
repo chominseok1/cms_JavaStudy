@@ -160,9 +160,9 @@ public class EmpDAO {
 			 vo.setJob(rs.getString(3));
 			 vo.setMgr(rs.getInt(4));
 			vo.setHiredate(rs.getDate(5));
-			 vo.setSal(rs.getInt(5));
-			 vo.setComm(rs.getInt(6));
-			 vo.setDeptno(rs.getInt(7));
+			 vo.setSal(rs.getInt(6));
+			 vo.setComm(rs.getInt(7));
+			 vo.setDeptno(rs.getInt(8));
 		 }catch(Exception ex)
 		 {
 			 ex.printStackTrace(); // 오류 확인
@@ -248,7 +248,8 @@ public class EmpDAO {
 		 {   //1. 연결
 			 getConnection();
 			 //SQL문장 제작
-			 String sql="SELECT DISTINCT ename "+"FROM emp"+" WHERE ename LIKE '%"+s+"%'";
+			 //String sql="SELECT DISTINCT ename "+"FROM emp"+" WHERE ename LIKE '%"+s+"%'";
+			String sql="SELECT DISTINCT ename "+"FROM emp"+" WHERE ename LIKE '%'||s||'%'";
 			 //SQL 문장 전송
 			 ps=conn.prepareStatement(sql);
 			 //결과값 받기
