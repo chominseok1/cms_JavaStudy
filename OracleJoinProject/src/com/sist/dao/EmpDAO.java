@@ -84,6 +84,10 @@ public class EmpDAO {
 				vo.getDvo().setDname(rs.getString(7));
 				vo.getDvo().setLoc(rs.getString(8));
 				vo.getSvo().setGrade(rs.getInt(9));
+				
+				
+				
+				
 				list.add(vo);
 			}
 		 rs.close();
